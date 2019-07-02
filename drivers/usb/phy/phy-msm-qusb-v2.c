@@ -632,11 +632,6 @@ static int qusb_phy_init(struct usb_phy *phy)
 							(4 * p_index));
 	}
 
-	if (qphy->refgen_north_bg_reg && qphy->override_bias_ctrl2)
-		if (readl_relaxed(qphy->refgen_north_bg_reg) & BANDGAP_BYPASS)
-			writel_relaxed(BIAS_CTRL_2_OVERRIDE_VAL,
-				qphy->base + qphy->phy_reg[BIAS_CTRL_2]);
-
 	if (qphy->bias_ctrl2)
 		writel_relaxed(qphy->bias_ctrl2,
 				qphy->base + qphy->phy_reg[BIAS_CTRL_2]);

@@ -4947,6 +4947,9 @@ unlock:
 			smblib_notify_device_mode(chg, false);
 	}
 	chg->otg_present = false;
+
+	/* notify policy engine to update pd->typec_mode when typec removal */
+	notify_typec_mode_changed_for_pd();
 }
 
 static void smblib_handle_typec_insertion(struct smb_charger *chg)

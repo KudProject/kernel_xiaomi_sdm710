@@ -596,4 +596,10 @@ int smblib_set_prop_rerun_apsd(struct smb_charger *chg,
 
 int smblib_init(struct smb_charger *chg);
 int smblib_deinit(struct smb_charger *chg);
+
+/*
+ * this function is used for rapid plug in/out charger to notify
+ * policy engine to update typec mode
+ */
+extern void notify_typec_mode_changed_for_pd(void);
 #endif /* __SMB2_CHARGER_H */
