@@ -125,6 +125,9 @@ struct cam_actuator_ctrl_t {
 	struct i2c_data_settings i2c_data;
 	struct cam_actuator_query_cap act_info;
 	struct intf_params bridge_intf;
+#ifdef CONFIG_USE_BU64748
+	struct platform_device *pdev;
+#endif
 };
 
 #endif /* _CAM_ACTUATOR_DEV_H_ */

@@ -65,6 +65,9 @@ static int cam_eeprom_read_memory(struct cam_eeprom_ctrl_t *e_ctrl,
 			i2c_reg_settings.addr_type = emap[j].page.addr_type;
 			i2c_reg_settings.data_type = emap[j].page.data_type;
 			i2c_reg_settings.size = 1;
+#ifdef CONFIG_USE_BU64748
+			i2c_reg_settings.delay = emap[j].page.delay;
+#endif
 			i2c_reg_array.reg_addr = emap[j].page.addr;
 			i2c_reg_array.reg_data = emap[j].page.data;
 			i2c_reg_array.delay = emap[j].page.delay;
@@ -108,6 +111,11 @@ static int cam_eeprom_read_memory(struct cam_eeprom_ctrl_t *e_ctrl,
 			}
 		}
 
+#ifdef CONFIG_USE_BU64748
+		if (emap[j].delay.valid_size)
+			msleep(emap[j].delay.delay);
+#endif
+
 		if (emap[j].mem.valid_size) {
 			rc = camera_io_dev_read_seq(&e_ctrl->io_master_info,
 				emap[j].mem.addr, memptr,
@@ -122,6 +130,7 @@ static int cam_eeprom_read_memory(struct cam_eeprom_ctrl_t *e_ctrl,
 			memptr += emap[j].mem.valid_size;
 		}
 
+#ifndef CONFIG_USE_BU64748
 		if (emap[j].pageen.valid_size) {
 			i2c_reg_settings.addr_type = emap[j].pageen.addr_type;
 			i2c_reg_settings.data_type = emap[j].pageen.data_type;
@@ -139,6 +148,7 @@ static int cam_eeprom_read_memory(struct cam_eeprom_ctrl_t *e_ctrl,
 				return rc;
 			}
 		}
+#endif
 	}
 	return rc;
 }
