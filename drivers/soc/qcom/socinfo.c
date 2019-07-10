@@ -2003,6 +2003,22 @@ static void socinfo_select_format(void)
 	}
 }
 
+#ifdef CONFIG_MACH_XIAOMI_E2
+uint32_t get_hw_version_major(void)
+{
+	uint32_t version = socinfo_get_platform_version();
+	return (version & HW_MAJOR_VERSION_MASK) >> HW_MAJOR_VERSION_SHIFT;
+}
+EXPORT_SYMBOL(get_hw_version_major);
+
+uint32_t get_hw_version_minor(void)
+{
+	uint32_t version = socinfo_get_platform_version();
+	return (version & HW_MINOR_VERSION_MASK) >> HW_MINOR_VERSION_SHIFT;
+}
+EXPORT_SYMBOL(get_hw_version_minor);
+#endif
+
 int __init socinfo_init(void)
 {
 	static bool socinfo_init_done;

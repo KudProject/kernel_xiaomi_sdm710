@@ -335,4 +335,14 @@ enum pmic_model socinfo_get_pmic_model(void);
 uint32_t socinfo_get_pmic_die_revision(void);
 int __init socinfo_init(void) __must_check;
 
+#ifdef CONFIG_MACH_XIAOMI_E2
+#define HW_MAJOR_VERSION_SHIFT 16
+#define HW_MAJOR_VERSION_MASK  0xFFFF0000
+#define HW_MINOR_VERSION_SHIFT 0
+#define HW_MINOR_VERSION_MASK  0x0000FFFF
+
+uint32_t get_hw_version_major(void);
+uint32_t get_hw_version_minor(void);
+#endif
+
 #endif
