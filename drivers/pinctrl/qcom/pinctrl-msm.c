@@ -508,6 +508,10 @@ static void msm_gpio_dbg_show(struct seq_file *s, struct gpio_chip *chip)
 	unsigned i;
 
 	for (i = 0; i < chip->ngpio; i++, gpio++) {
+		/* bypass the NFC SPI and the FingerPrint gpios */
+		if (i < 4 || (i > 80 && i < 85))
+			continue;
+
 		msm_gpio_dbg_show_one(s, NULL, chip, i, gpio);
 		seq_puts(s, "\n");
 	}
