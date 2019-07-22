@@ -14847,23 +14847,15 @@ static struct platform_driver dbmdx_platform_driver = {
 
 static bool dbmdx_chk_hw(void)
 {
-	int hw_platform, hw_major, hw_minor;
+#ifdef CONFIG_MACH_XIAOMI_E2
+	int hw_major, hw_minor;
 
-	hw_platform = get_hw_version_platform();
 	hw_major = get_hw_version_major();
 	hw_minor = get_hw_version_minor();
 
-	printk(KERN_INFO "%s: hw_platform = %d, major <%d>, minor <%d>.\n",
-			__func__, hw_platform, hw_major, hw_minor);
-
-	if (HARDWARE_PLATFORM_SIRIUS == hw_platform) {
-		if ((hw_major == 1 && hw_minor < 2) || (hw_major == 0)) {
-			printk("%s: Hardware does support dbmd4.\n", __func__);
-			return true;
-		}
-	}
-
-	printk("%s: Hardware does NOT support dbmd4.\n", __func__);
+	if ((hw_major == 1 && hw_minor < 2) || hw_major == 0)
+		return true;
+#endif
 
 	return false;
 }
