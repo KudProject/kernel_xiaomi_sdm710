@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014-2015, 2017 The Linux Foundation. All rights reserved.
+ * Copyright (C) 2019 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -17,7 +18,7 @@
 #include <sound/soc.h>
 #include "msm-pcm-routing-v2.h"
 
-#ifdef CONFIG_SND_HWDEP
+#ifdef CONFIG_SND_HWDEP_ROUTING
 int msm_pcm_routing_hwdep_new(struct snd_soc_pcm_runtime *runtime,
 			      struct msm_pcm_routing_bdai_data *msm_bedais);
 void msm_pcm_routing_hwdep_free(struct snd_pcm *pcm);

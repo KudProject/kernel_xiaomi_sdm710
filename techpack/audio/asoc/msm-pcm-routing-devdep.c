@@ -1,4 +1,5 @@
 /* Copyright (c) 2014, 2016-2017 The Linux Foundation. All rights reserved.
+ * Copyright (C) 2019 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -19,7 +20,7 @@
 #include "msm-pcm-routing-devdep.h"
 #include "msm-ds2-dap-config.h"
 
-#ifdef CONFIG_SND_HWDEP
+#ifdef CONFIG_SND_HWDEP_ROUTING
 static int msm_pcm_routing_hwdep_open(struct snd_hwdep *hw, struct file *file)
 {
 	pr_debug("%s\n", __func__);
