@@ -129,6 +129,15 @@ extern int fscrypt_do_page_crypto(const struct inode *inode,
 				  gfp_t gfp_flags);
 extern struct page *fscrypt_alloc_bounce_page(struct fscrypt_ctx *ctx,
 					      gfp_t gfp_flags);
+extern const struct dentry_operations fscrypt_d_ops;
+
+extern void __printf(3, 4) __cold
+fscrypt_msg(struct super_block *sb, const char *level, const char *fmt, ...);
+
+#define fscrypt_warn(sb, fmt, ...)		\
+	fscrypt_msg(sb, KERN_WARNING, fmt, ##__VA_ARGS__)
+#define fscrypt_err(sb, fmt, ...)		\
+	fscrypt_msg(sb, KERN_ERR, fmt, ##__VA_ARGS__)
 
 /* fname.c */
 extern int fname_encrypt(struct inode *inode, const struct qstr *iname,
