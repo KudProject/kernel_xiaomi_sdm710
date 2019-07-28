@@ -37,7 +37,6 @@
 #include <linux/kallsyms.h>
 #include <linux/proc_fs.h>
 #include <linux/export.h>
-#include <linux/cpumask.h>
 
 #include <asm/hardware/cache-l2x0.h>
 #include <asm/hardware/cache-uniphier.h>
@@ -128,7 +127,6 @@ static bool migrate_one_irq(struct irq_desc *desc)
 	const struct cpumask *affinity = irq_data_get_affinity_mask(d);
 	struct irq_chip *c;
 	bool ret = false;
-	struct cpumask available_cpus;
 
 	/*
 	 * If this is a per-CPU interrupt, or the affinity does not
@@ -137,28 +135,16 @@ static bool migrate_one_irq(struct irq_desc *desc)
 	if (irqd_is_per_cpu(d) || !cpumask_test_cpu(smp_processor_id(), affinity))
 		return false;
 
-	cpumask_copy(&available_cpus, affinity);
-	cpumask_andnot(&available_cpus, &available_cpus, cpu_isolated_mask);
-	affinity = &available_cpus;
-
 	if (cpumask_any_and(affinity, cpu_online_mask) >= nr_cpu_ids) {
-		cpumask_andnot(&available_cpus, cpu_online_mask,
-			       cpu_isolated_mask);
-		if (cpumask_empty(affinity))
-			affinity = cpu_online_mask;
+		affinity = cpu_online_mask;
 		ret = true;
 	}
 
 	c = irq_data_get_irq_chip(d);
-	if (!c->irq_set_affinity) {
+	if (!c->irq_set_affinity)
 		pr_debug("IRQ%u: unable to set affinity\n", d->irq);
-	} else {
-		int r = irq_set_affinity_locked(d, affinity, false);
-
-		if (r)
-			pr_warn_ratelimited("IRQ%u: set affinity failed(%d).\n",
-					    d->irq, r);
-	}
+	else if (c->irq_set_affinity(d, affinity, false) == IRQ_SET_MASK_OK && ret)
+		cpumask_copy(irq_data_get_affinity_mask(d), affinity);
 
 	return ret;
 }
