@@ -4652,7 +4652,7 @@ static bool chk_hw_va(void)
 	hw_major = get_hw_version_major();
 	hw_minor = get_hw_version_minor();
 
-	if ((hw_major == 1 && hw_minor < 2) || hw_major == 0) {
+	if ((hw_major == 1 && hw_minor < 2) || hw_major == 0)
 		return true;
 #endif
 
