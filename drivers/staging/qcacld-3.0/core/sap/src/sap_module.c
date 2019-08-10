@@ -1257,7 +1257,7 @@ wlansap_update_csa_channel_params(struct sap_context *sap_context,
  *
  * Return: string reason
  */
-static char *sap_get_csa_reason_str(enum sap_csa_reason_code reason)
+static char __maybe_unused *sap_get_csa_reason_str(enum sap_csa_reason_code reason)
 {
 	switch (reason) {
 	case CSA_REASON_UNKNOWN:
