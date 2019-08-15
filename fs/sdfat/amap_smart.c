@@ -631,8 +631,6 @@ static inline int amap_update_dest(AMAP_T *amap, int ori_dest)
 }
 
 
-#define PACKING_SOFTLIMIT      (amap->option.packing_ratio)
-#define PACKING_HARDLIMIT      (amap->option.packing_ratio * 4)
 /*
  * Pick a packing AU if needed.
  * Otherwise just return NULL
@@ -641,6 +639,8 @@ static inline int amap_update_dest(AMAP_T *amap, int ori_dest)
  */
 static inline AU_INFO_T *amap_get_packing_au(AMAP_T *amap, int dest, int num_to_wb, int *clu_to_skip)
 {
+	int packing_softlimit = amap->option.packing_ratio;
+	int packing_hardlimit = amap->option.packing_ratio * 4;
 	AU_INFO_T *au = NULL;
 
 	if (dest == ALLOC_COLD_PACKING) {
@@ -679,8 +679,8 @@ static inline AU_INFO_T *amap_get_packing_au(AMAP_T *amap, int dest, int num_to_
 	 * If the number exceeds the specific threshold,
 	 * allocate on a partial AU or generate random I/O.
 	 */
-	if ((PACKING_SOFTLIMIT > 0) &&
-		(amap->n_need_packing >= PACKING_SOFTLIMIT) &&
+	if ((packing_softlimit > 0) &&
+		(amap->n_need_packing >= packing_softlimit) &&
 		(num_to_wb < (int)amap->clusters_per_au)) {
 		/* Best-fit packing:
 		 * If num_to_wb (expected number to be allocated) is smaller
@@ -708,7 +708,7 @@ static inline AU_INFO_T *amap_get_packing_au(AMAP_T *amap, int dest, int num_to_
 		}
 	}
 
-	if ((PACKING_HARDLIMIT) && amap->n_need_packing >= PACKING_HARDLIMIT) {
+	if ((packing_hardlimit) && amap->n_need_packing >= packing_hardlimit) {
 		/* Compulsory SLC flushing:
 		 * If there was no chance to do best-fit packing
 		 * and the # of AU-aligned allocation exceeds HARD threshold,
