@@ -1568,6 +1568,13 @@ static ssize_t _sde_debugfs_conn_cmd_tx_write(struct file *file,
 		return 0;
 	}
 
+	if (count == 0)
+		return rc;
+	if (count > MAX_CMD_PAYLOAD_SIZE * 3) {
+		SDE_ERROR("expected <%d bytes into command packet\n", MAX_CMD_PAYLOAD_SIZE * 3);
+		return -E2BIG;
+	}
+
 	c_conn = to_sde_connector(connector);
 
 	if (!c_conn->ops.cmd_transfer) {
@@ -2089,6 +2096,13 @@ static irqreturn_t esd_err_irq_handle(int irq, void *data)
 		pr_info("%s: Panel is not initialized, skip it!\n", __func__);
 		return IRQ_HANDLED;
 	}
+
+	if (atomic_read(&dsi_display->panel->esd_recovery_pending)) {
+		pr_info("%s: esd recovery underway\n", __func__);
+		return IRQ_HANDLED;
+	}
+
+	atomic_set(&dsi_display->panel->esd_recovery_pending, 1);
 
 	SDE_ERROR("esd check irq report PANEL_DEAD conn_id: %d enc_id: %d\n",
 		c_conn->base.base.id, c_conn->encoder->base.id);

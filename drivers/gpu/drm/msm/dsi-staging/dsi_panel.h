@@ -38,6 +38,7 @@
 #define DSI_MODE_MAX 5
 
 #define HIST_BL_OFFSET_LIMIT 48
+#define DEFAULT_FOD_OFF_DIMMING_DELAY  170
 
 enum dsi_panel_rotation {
 	DSI_PANEL_ROTATE_NONE = 0,
@@ -221,7 +222,9 @@ struct dsi_panel {
 	u32 skip_dimmingon;
 
 	bool fod_hbm_enabled;
+	u32 fod_off_dimming_delay;
 	ktime_t fod_hbm_off_time;
+	ktime_t fod_backlight_off_time;
 
 	char dsc_pps_cmd[DSI_CMD_PPS_SIZE];
 	enum dsi_dms_mode dms_mode;
