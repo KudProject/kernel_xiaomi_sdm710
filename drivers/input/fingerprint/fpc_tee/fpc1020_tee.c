@@ -41,6 +41,9 @@
 #include <drm/drm_bridge.h>
 #include <drm/drm_notifier.h>
 
+#define FP_HWMON
+
+
 #define FPC_TTW_HOLD_TIME 2000
 #define FP_UNLOCK_REJECTION_TIMEOUT (FPC_TTW_HOLD_TIME - 500)
 
@@ -54,6 +57,9 @@
 #define PWR_ON_SLEEP_MAX_US (PWR_ON_SLEEP_MIN_US + 900)
 
 #define NUM_PARAMS_REG_ENABLE_SET 2
+#ifdef FP_HWMON
+#define HWMON_CONPONENT_NAME "fingerprint"
+#endif
 
 static const char * const pctl_names[] = {
 	"fpc1020_reset_reset",
