@@ -53,7 +53,7 @@
 #define ERROR_FLASH_UNKNOWN				(int)0x8000000D			/*flash status busy or unknown*/
 /** @}*/
 
-//SECOND LEVEL ERROR CODE
+
 /** @defgroup second_level Second Level Error Code
 * @ingroup error_codes
 * Errors related to simple logic operations in the IC which require one command or which are part of a more complex procedure
@@ -81,7 +81,7 @@
 #define ERROR_CH_LEN					(int)0x80001500			/*unable to retrieve the force and/or sense length*/
 /** @}*/
 
-//THIRD LEVEL ERROR CODE
+
 /** @defgroup third_level	Third Level Error Code
 * @ingroup error_codes
 * Errors related to logic operations in the IC which require more commands/steps or which are part of a more complex procedure
@@ -104,7 +104,7 @@
 #define ERROR_GET_FRAME					(int)0x800F0000			/*unable to get frame*/
 /** @}*/
 
-//FOURTH LEVEL ERROR CODE
+
 /** @defgroup fourth_level	Fourth Level Error Code
 * @ingroup error_codes
 * Errors related to the highest logic operations in the IC which have an important impact on the driver flow or which require several commands and steps to be executed
@@ -135,11 +135,11 @@ typedef struct {
 
 void logError(int force, const char *msg, ...);
 int isI2cError(int error);
-int dumpErrorInfo(u8 * outBuf, int size);
-int errorHandler(u8 * event, int size);
-int addErrorIntoList(u8 * event, int size);
+int dumpErrorInfo(u8 *outBuf, int size);
+int errorHandler(u8 *event, int size);
+int addErrorIntoList(u8 *event, int size);
 int getErrorListCount(void);
 int resetErrorList(void);
 int pollErrorList(int *event_to_search, int event_bytes);
-int pollForErrorType(u8 * list, int size);
+int pollForErrorType(u8 *list, int size);
 #endif

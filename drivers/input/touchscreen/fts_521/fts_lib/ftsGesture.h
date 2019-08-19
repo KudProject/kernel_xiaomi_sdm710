@@ -27,12 +27,12 @@
 
 #define	GESTURE_MAX_COORDS_PAIRS_REPORT		100
 
-int updateGestureMask(u8 * mask, int size, int en);
-int disableGesture(u8 * mask, int size);
-int enableGesture(u8 * mask, int size);
+int updateGestureMask(u8 *mask, int size, int en);
+int disableGesture(u8 *mask, int size);
+int enableGesture(u8 *mask, int size);
 int enterGestureMode(int reload);
 int isAnyGestureActive(void);
-int readGestureCoords(u8 * event);
-int getGestureCoords(u16 ** x, u16 ** y);
+int readGestureCoords(u8 *event);
+int getGestureCoords(u16  **x, u16  **y);
 
 #endif

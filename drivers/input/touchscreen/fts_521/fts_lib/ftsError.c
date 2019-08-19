@@ -73,7 +73,7 @@ int isI2cError(int error)
  * @param size dimension in bytes of outBuf, if > ERROR_DUMP_ROW_SIZE*ERROR_DUMP_COL_SIZE, only the first ERROR_DUMP_ROW_SIZE*ERROR_DUMP_COL_SIZE bytes will be copied
  * @return OK if success or an error code which specify the type of error encountered
  */
-int dumpErrorInfo(u8 * outBuf, int size)
+int dumpErrorInfo(u8 *outBuf, int size)
 {
 	int ret, i;
 	u8 data[ERROR_DUMP_ROW_SIZE * ERROR_DUMP_COL_SIZE] = { 0 };
@@ -134,7 +134,7 @@ int dumpErrorInfo(u8 * outBuf, int size)
 * @param size size of event
 * @return OK if the error event doesn't require any action or the recovery strategy doesn't have any impact in the possible procedure that trigger the error, otherwise return an error code which specify the kind of error encountered. If ERROR_HANDLER_STOP_PROC the calling function must stop!
 */
-int errorHandler(u8 * event, int size)
+int errorHandler(u8 *event, int size)
 {
 	int res = OK;
 	struct fts_ts_info *info = NULL;
@@ -235,7 +235,7 @@ int errorHandler(u8 * event, int size)
 * @param size size of event
 * @return OK
 */
-int addErrorIntoList(u8 * event, int size)
+int addErrorIntoList(u8 *event, int size)
 {
 	int i = 0;
 
@@ -328,7 +328,7 @@ int pollErrorList(int *event_to_search, int event_bytes)
 * @param size size of list
 * @return error type found if success or ERROR_TIMEOUT
 */
-int pollForErrorType(u8 * list, int size)
+int pollForErrorType(u8 *list, int size)
 {
 	int i = 0, j = 0, find = 0;
 	int count = getErrorListCount();

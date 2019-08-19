@@ -35,7 +35,7 @@
 * Take the starting time and save it in a StopWatch variable
 * @param w pointer of a StopWatch struct
 */
-void startStopWatch(StopWatch * w)
+void startStopWatch(StopWatch *w)
 {
 	w->start = current_kernel_time();
 }
@@ -44,7 +44,7 @@ void startStopWatch(StopWatch * w)
 * Take the stop time and save it in a StopWatch variable
 * @param w pointer of a StopWatch struct
 */
-void stopStopWatch(StopWatch * w)
+void stopStopWatch(StopWatch *w)
 {
 	w->end = current_kernel_time();
 }
@@ -54,7 +54,7 @@ void stopStopWatch(StopWatch * w)
 * @param w pointer of a StopWatch struct
 * @return amount of time in ms (the return value is meaningless if the startStopWatch and stopStopWatch were not called before)
 */
-int elapsedMillisecond(StopWatch * w)
+int elapsedMillisecond(StopWatch *w)
 {
 	int result;
 
@@ -69,7 +69,7 @@ int elapsedMillisecond(StopWatch * w)
 * @param w pointer of a StopWatch struct
 * @return amount of time in ns (the return value is meaningless if the startStopWatch and stopStopWatch were not called before)
 */
-int elapsedNanosecond(StopWatch * w)
+int elapsedNanosecond(StopWatch *w)
 {
 	int result;
 

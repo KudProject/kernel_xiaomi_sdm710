@@ -23,7 +23,7 @@
 
 #include "ftsSoftware.h"
 
-//Number of data bytes for each node
+
 #define BYTES_PER_NODE							2	/*number of data bytes for each node*/
 
 #define RETRY_FRAME_DATA_READ					2	/*max number of attempts to read a frame*/
@@ -86,6 +86,6 @@ int getChannelsLength(void);
 int getFrameData(u16 address, int size, short *frame);
 int getSenseLen(void);
 int getForceLen(void);
-int getMSFrame3(MSFrameType type, MutualSenseFrame * frame);
-int getSSFrame3(SSFrameType type, SelfSenseFrame * frame);
+int getMSFrame3(MSFrameType type, MutualSenseFrame *frame);
+int getSSFrame3(SSFrameType type, SelfSenseFrame *frame);
 #endif

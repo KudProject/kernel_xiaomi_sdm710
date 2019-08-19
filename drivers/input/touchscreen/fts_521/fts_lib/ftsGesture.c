@@ -30,7 +30,7 @@ static u8 gesture_mask[GESTURE_MASK_SIZE] = { 0 };
 u16 gesture_coordinates_x[GESTURE_MAX_COORDS_PAIRS_REPORT] = { 0 };
 u16 gesture_coordinates_y[GESTURE_MAX_COORDS_PAIRS_REPORT] = { 0 };
 int gesture_coords_reported = ERROR_OP_NOT_ALLOW;
-static u8 refreshGestureMask = 0;
+static u8 refreshGestureMask;
 struct mutex gestureMask_mutex;
 
 /**
@@ -40,7 +40,7 @@ struct mutex gestureMask_mutex;
  * @param en 0 = enable the gestures set in mask, 1 = disable the gestures set in mask
  * @return OK if success or an error code which specify the type of error encountered
  */
-int updateGestureMask(u8 * mask, int size, int en)
+int updateGestureMask(u8 *mask, int size, int en)
 {
 	u8 temp;
 	int i;
@@ -108,7 +108,7 @@ int updateGestureMask(u8 * mask, int size, int en)
  * @param size dimension in byte of mask. This size can be <= GESTURE_MASK_SIZE. If size < GESTURE_MASK_SIZE the bytes of mask are considering continuos and starting from the less significant byte.
  * @return OK if success or an error code which specify the type of error encountered
  */
-int enableGesture(u8 * mask, int size)
+int enableGesture(u8 *mask, int size)
 {
 	int i, res;
 
@@ -152,7 +152,7 @@ END:
  * @param size dimension in byte of mask. This size can be <= GESTURE_MASK_SIZE. If size < GESTURE_MASK_SIZE the bytes of mask are considering continuos and starting from the less significant byte.
  * @return OK if success or an error code which specify the type of error encountered
  */
-int disableGesture(u8 * mask, int size)
+int disableGesture(u8 *mask, int size)
 {
 	u8 temp;
 	int i, res;
@@ -206,7 +206,7 @@ int enterGestureMode(int reload)
 {
 	int res, ret;
 
-	res = fts_disableInterrupt();
+	res = fts_disableInterruptNoSync();
 	if (res < OK) {
 		logError(1, "%s enterGestureMode: ERROR %08X \n", tag,
 			 res | ERROR_DISABLE_INTER);
@@ -275,7 +275,7 @@ int isAnyGestureActive(void)
  * @param event pointer to a byte array which contains the gesture event reported by the fw when a gesture is detected
  * @return OK if success or an error code which specify the type of error encountered
  */
-int readGestureCoords(u8 * event)
+int readGestureCoords(u8 *event)
 {
 	int i = 0;
 	u64 address = 0;
@@ -338,7 +338,7 @@ int readGestureCoords(u8 * event)
  * @param y output parameter which will store the address of the array containing the y coordinates
  * @return the number of points (x,y) stored and therefore the size of the x and y array returned.
  */
-int getGestureCoords(u16 ** x, u16 ** y)
+int getGestureCoords(u16  **x, u16  **y)
 {
 	*x = gesture_coordinates_x;
 	*y = gesture_coordinates_y;

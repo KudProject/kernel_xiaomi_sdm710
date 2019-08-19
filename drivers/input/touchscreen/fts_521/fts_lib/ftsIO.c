@@ -37,7 +37,7 @@ static u16 I2CSAD;
 #include <linux/spi/spidev.h>
 #endif
 
-static void *client = NULL;
+static void *client;
 
 #include "ftsCore.h"
 #include "ftsError.h"
@@ -128,7 +128,7 @@ struct spi_device *getClient()
 * @param byteToRead number of bytes to read
 * @return OK if success or an error code which specify the type of error encountered
 */
-int fts_read(u8 * outBuf, int byteToRead)
+int fts_read(u8 *outBuf, int byteToRead)
 {
 	int ret = -1;
 	int retry = 0;
@@ -183,7 +183,7 @@ int fts_read(u8 * outBuf, int byteToRead)
 * @param byteToRead number of bytes to read
 * @return OK if success or an error code which specify the type of error encountered
 */
-int fts_writeRead(u8 * cmd, int cmdLength, u8 * outBuf, int byteToRead)
+int fts_writeRead(u8 *cmd, int cmdLength, u8 *outBuf, int byteToRead)
 {
 	int ret = -1;
 	int retry = 0;
@@ -247,7 +247,7 @@ int fts_writeRead(u8 * cmd, int cmdLength, u8 * outBuf, int byteToRead)
 * @param cmdLength size of cmd
 * @return OK if success or an error code which specify the type of error encountered
 */
-int fts_write(u8 * cmd, int cmdLength)
+int fts_write(u8 *cmd, int cmdLength)
 {
 	int ret = -1;
 	int retry = 0;
@@ -298,7 +298,7 @@ int fts_write(u8 * cmd, int cmdLength)
 * @param cmdLength size of cmd
 * @return OK if success, or an error code which specify the type of error encountered
 */
-int fts_writeFwCmd(u8 * cmd, int cmdLength)
+int fts_writeFwCmd(u8 *cmd, int cmdLength)
 {
 	int ret = -1;
 	int ret2 = -1;
@@ -362,8 +362,8 @@ int fts_writeFwCmd(u8 * cmd, int cmdLength)
 * @param byteToRead number of bytes to read
 * @return OK if success or an error code which specify the type of error encountered
 */
-int fts_writeThenWriteRead(u8 * writeCmd1, int writeCmdLength, u8 * readCmd1,
-			   int readCmdLength, u8 * outBuf, int byteToRead)
+int fts_writeThenWriteRead(u8 *writeCmd1, int writeCmdLength, u8 *readCmd1,
+			   int readCmdLength, u8 *outBuf, int byteToRead)
 {
 	int ret = -1;
 	int retry = 0;
@@ -439,7 +439,7 @@ int fts_writeThenWriteRead(u8 * writeCmd1, int writeCmdLength, u8 * readCmd1,
 * @return OK if success or an error code which specify the type of error encountered
 */
 /* this function works only if the address is max 8 bytes */
-int fts_writeU8UX(u8 cmd, AddrSize addrSize, u64 address, u8 * data,
+int fts_writeU8UX(u8 cmd, AddrSize addrSize, u64 address, u8 *data,
 		  int dataSize)
 {
 
@@ -500,7 +500,7 @@ int fts_writeU8UX(u8 cmd, AddrSize addrSize, u64 address, u8 * data,
 * @param hasDummyByte  if the first byte of each reading is dummy (must be skipped) set to 1, otherwise if it is valid set to 0 (or any other value)
 * @return OK if success or an error code which specify the type of error encountered
 */
-int fts_writeReadU8UX(u8 cmd, AddrSize addrSize, u64 address, u8 * outBuf,
+int fts_writeReadU8UX(u8 cmd, AddrSize addrSize, u64 address, u8 *outBuf,
 		      int byteToRead, int hasDummyByte)
 {
 	u8 finalCmd[1 + addrSize];
@@ -564,7 +564,7 @@ int fts_writeReadU8UX(u8 cmd, AddrSize addrSize, u64 address, u8 * outBuf,
 * @return OK if success or an error code which specify the type of error encountered
 */
 int fts_writeU8UXthenWriteU8UX(u8 cmd1, AddrSize addrSize1, u8 cmd2,
-			       AddrSize addrSize2, u64 address, u8 * data,
+			       AddrSize addrSize2, u64 address, u8 *data,
 			       int dataSize)
 {
 	u8 finalCmd1[1 + addrSize1];
@@ -633,7 +633,7 @@ int fts_writeU8UXthenWriteU8UX(u8 cmd1, AddrSize addrSize1, u8 cmd2,
 * @return OK if success or an error code which specify the type of error encountered
 */
 int fts_writeU8UXthenWriteReadU8UX(u8 cmd1, AddrSize addrSize1, u8 cmd2,
-				   AddrSize addrSize2, u64 address, u8 * outBuf,
+				   AddrSize addrSize2, u64 address, u8 *outBuf,
 				   int byteToRead, int hasDummyByte)
 {
 	u8 finalCmd1[1 + addrSize1];

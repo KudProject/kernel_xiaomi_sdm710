@@ -137,7 +137,7 @@ int getForceLen()
 * @param frame pointer to MutualSenseFrame variable which will contain the data
 * @return OK if success or an error code which specify the type of error encountered
 */
-int getMSFrame3(MSFrameType type, MutualSenseFrame * frame)
+int getMSFrame3(MSFrameType type, MutualSenseFrame *frame)
 {
 	u16 offset;
 	int ret, force_len, sense_len;
@@ -257,7 +257,7 @@ LOAD_FRC:
 * @param frame pointer to SelfSenseFrame variable which will contain the data
 * @return OK if success or an error code which specify the type of error encountered
 */
-int getSSFrame3(SSFrameType type, SelfSenseFrame * frame)
+int getSSFrame3(SSFrameType type, SelfSenseFrame *frame)
 {
 	u16 offset_force, offset_sense;
 	int ret;

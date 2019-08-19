@@ -159,23 +159,23 @@ int isSystemResettedUp(void);
 int isSystemResettedDown(void);
 void setSystemResetedUp(int val);
 void setSystemResetedDown(int val);
-int pollForEvent(int *event_to_search, int event_bytes, u8 * readData,
+int pollForEvent(int *event_to_search, int event_bytes, u8 *readData,
 		 int time_to_wait);
-int checkEcho(u8 * cmd, int size);
+int checkEcho(u8 *cmd, int size);
 int setScanMode(u8 mode, u8 settings);
-int setFeatures(u8 feat, u8 * settings, int size);
+int setFeatures(u8 feat, u8 *settings, int size);
 int defaultSysInfo(int i2cError);
-int writeSysCmd(u8 sys_cmd, u8 * sett, int size);
+int writeSysCmd(u8 sys_cmd, u8 *sett, int size);
 int readSysInfo(int request);
-int readConfig(u16 offset, u8 * outBuf, int len);
+int readConfig(u16 offset, u8 *outBuf, int len);
 int fts_disableInterrupt(void);
 int fts_disableInterruptNoSync(void);
 int fts_resetDisableIrqCount(void);
 int fts_enableInterrupt(void);
 int fts_crc_check(void);
 int requestSyncFrame(u8 type);
-int fts_get_lockdown_info(u8 * lockData);
-int writeLockDownInfo(u8 * data, int size, u8 lock_id);
-int readLockDownInfo(u8 * lockData, u8 lock_id, int size);
+int fts_get_lockdown_info(u8 *lockData);
+int writeLockDownInfo(u8 *data, int size, u8 lock_id);
+int readLockDownInfo(u8 *lockData, u8 lock_id, int size);
 
 #endif /* FTS_CORE_H */

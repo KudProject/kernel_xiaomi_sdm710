@@ -55,7 +55,7 @@ extern SysInfo systemInfo;
  * @param config_id pointer to the variable which will contains the config id
  * @return OK if success or an error code which specify the type of error encountered
  */
-int getFirmwareVersion(u16 * fw_vers, u16 * config_id)
+int getFirmwareVersion(u16 *fw_vers, u16 *config_id)
 {
 	u8 fwvers[DCHIP_FW_VER_BYTE];
 	u8 confid[CONFIG_ID_BYTE];
@@ -99,7 +99,7 @@ int getFirmwareVersion(u16 * fw_vers, u16 * config_id)
 * @param size pointer to a variable which will contain the size of the loaded data
 * @return OK if success or an error code which specify the type of error encountered
 */
-int getFWdata(const char *pathToFile, u8 ** data, int *size)
+int getFWdata(const char *pathToFile, u8  **data, int *size)
 {
 	const struct firmware *fw = NULL;
 	struct device *dev = NULL;
@@ -175,7 +175,7 @@ int getFWdata(const char *pathToFile, u8 ** data, int *size)
 * @param keep_cx if 1, the CX area will be loaded otherwise will be skipped
 * @return OK if success or an error code which specify the type of error encountered
 */
-int readFwFile(const char *path, Firmware * fw, int keep_cx)
+int readFwFile(const char *path, Firmware *fw, int keep_cx)
 {
 	int res;
 	int orig_size;
@@ -425,7 +425,7 @@ int hold_m3()
 * @param keep_cx if 1, the CX area will be loaded and burnt otherwise will be skipped and the area will be untouched
 * @return OK if success or an error code which specify the type of error encountered
 */
-int parseBinFile(u8 * fw_data, int fw_size, Firmware * fwData, int keep_cx)
+int parseBinFile(u8 *fw_data, int fw_size, Firmware *fwData, int keep_cx)
 {
 
 	int dimension, index = 0;
@@ -782,7 +782,7 @@ int start_flash_dma()
 * @param size size of data
 * @return OK if success or an error code which specify the type of error encountered
 */
-int fillFlash(u32 address, u8 * data, int size)
+int fillFlash(u32 address, u8 *data, int size)
 {
 	int remaining = size, index = 0;
 	int toWrite = 0;

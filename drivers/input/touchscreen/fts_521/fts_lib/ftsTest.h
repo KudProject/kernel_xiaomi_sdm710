@@ -225,22 +225,22 @@ int initTestToDo(void);
 
 /**@}*/
 
-int computeAdjHoriz(i8 * data, int row, int column, u8 ** result);
-int computeAdjHorizTotal(short *data, int row, int column, u16 ** result);
-int computeAdjVert(i8 * data, int row, int column, u8 ** result);
-int computeAdjVertTotal(short *data, int row, int column, u16 ** result);
-int computeAdjHorizFromU(u8 * data, int row, int column, u8 ** result);
-int computeAdjHorizTotalFromU(u16 * data, int row, int column, u16 ** result);
-int computeAdjVertFromU(u8 * data, int row, int column, u8 ** result);
-int computeAdjVertTotalFromU(u16 * data, int row, int column, u16 ** result);
+int computeAdjHoriz(i8 *data, int row, int column, u8  **result);
+int computeAdjHorizTotal(short *data, int row, int column, u16  **result);
+int computeAdjVert(i8 *data, int row, int column, u8  **result);
+int computeAdjVertTotal(short *data, int row, int column, u16  **result);
+int computeAdjHorizFromU(u8 *data, int row, int column, u8  **result);
+int computeAdjHorizTotalFromU(u16 *data, int row, int column, u16  **result);
+int computeAdjVertFromU(u8 *data, int row, int column, u8  **result);
+int computeAdjVertTotalFromU(u16 *data, int row, int column, u16  **result);
 int checkLimitsMinMax(short *data, int row, int column, int min, int max);
-int checkLimitsMap(i8 * data, int row, int column, int *min, int *max);
+int checkLimitsMap(i8 *data, int row, int column, int *min, int *max);
 int checkLimitsMapTotal(short *data, int row, int column, int *min, int *max);
-int checkLimitsMapFromU(u8 * data, int row, int column, int *min, int *max);
-int checkLimitsMapTotalFromU(u16 * data, int row, int column, int *min,
+int checkLimitsMapFromU(u8 *data, int row, int column, int *min, int *max);
+int checkLimitsMapTotalFromU(u16 *data, int row, int column, int *min,
 			     int *max);
-int checkLimitsMapAdj(u8 * data, int row, int column, int *max);
-int checkLimitsMapAdjTotal(u16 * data, int row, int column, int *max);
+int checkLimitsMapAdj(u8 *data, int row, int column, int *max);
+int checkLimitsMapAdjTotal(u16 *data, int row, int column, int *max);
 
 /**  @defgroup mp_api MP API
  * @ingroup mp_test
@@ -248,9 +248,9 @@ int checkLimitsMapAdjTotal(u16 * data, int row, int column, int *max);
  * The parameters of these functions allow to customize their behavior in order to satisfy different scenarios
  * @{
  */
-int production_test_ito(char* path_limits,TestToDo *todo);
+int production_test_ito(char *path_limits,TestToDo *todo);
 int production_test_initialization(u8 type);
-int production_test_main(char * pathThresholds, int stop_on_fail, int saveInit, TestToDo *todo);
+int production_test_main(char *pathThresholds, int stop_on_fail, int saveInit, TestToDo *todo);
 int production_test_ms_raw(char *path_limits, int stop_on_fail, TestToDo *todo);
 int production_test_ms_raw_lp(char *path_limits, int stop_on_fail, TestToDo *todo);
 int production_test_ms_cx(char *path_limits, int stop_on_fail, TestToDo *todo);
@@ -261,8 +261,8 @@ int production_test_ss_ix_cx(char *path_limits, int stop_on_fail, TestToDo *todo
 int production_test_data(char *path_limits, int stop_on_fail, TestToDo *todo);
 int production_test_ms_key_cx(char *path_limits, int stop_on_fail, TestToDo *todo);
 int production_test_ms_key_raw(char *path_limits);
-int computeTotal(u8 * data, u8 main, int row, int column, int m, int n,
-		 u16 ** result);
+int computeTotal(u8 *data, u8 main, int row, int column, int m, int n,
+		 u16  **result);
 /** @}*/
 
 /**

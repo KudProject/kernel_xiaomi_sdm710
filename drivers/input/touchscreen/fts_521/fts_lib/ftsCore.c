@@ -181,7 +181,7 @@ void setSystemResetedUp(int val)
 * @param time_to_wait time to wait before going in timeout
 * @return OK if success or an error code which specify the type of error encountered
 */
-int pollForEvent(int *event_to_search, int event_bytes, u8 * readData,
+int pollForEvent(int *event_to_search, int event_bytes, u8 *readData,
 		 int time_to_wait)
 {
 	int i, find, retry, count_err;
@@ -277,7 +277,7 @@ int pollForEvent(int *event_to_search, int event_bytes, u8 * readData,
 * @param size size of cmd
 * @return OK if success or an error code which specify the type of error encountered
 */
-int checkEcho(u8 * cmd, int size)
+int checkEcho(u8 *cmd, int size)
 {
 	int ret, i;
 	int event_to_search[FIFO_EVENT_SIZE];
@@ -357,7 +357,7 @@ int setScanMode(u8 mode, u8 settings)
 * @param size in bytes of settings
 * @return OK if success or an error code which specify the type of error encountered
 */
-int setFeatures(u8 feat, u8 * settings, int size)
+int setFeatures(u8 feat, u8 *settings, int size)
 {
 	u8 cmd[2 + size];
 	int i = 0;
@@ -394,7 +394,7 @@ int setFeatures(u8 feat, u8 * settings, int size)
 * @param size in bytes of settings
 * @return OK if success or an error code which specify the type of error encountered
 */
-int writeSysCmd(u8 sys_cmd, u8 * sett, int size)
+int writeSysCmd(u8 sys_cmd, u8 *sett, int size)
 {
 	u8 cmd[2 + size];
 	int ret;
@@ -723,7 +723,7 @@ FAIL:
  * @param len number of bytes to read
  * @return OK if success or an error code which specify the type of error encountered
  */
-int readConfig(u16 offset, u8 * outBuf, int len)
+int readConfig(u16 offset, u8 *outBuf, int len)
 {
 	int ret;
 	u64 final_address = offset + ADDR_CONFIG_OFFSET;
@@ -784,7 +784,7 @@ int fts_disableInterruptNoSync()
 			disable_irq_count++;
 		}
 
-		spin_unlock(&fts_int);
+		spin_unlock_irq(&fts_int);
 		logError(0, "%s Interrupt No Sync Disabled!\n", tag);
 		return OK;
 	} else {
@@ -986,7 +986,7 @@ int requestSyncFrame(u8 type)
 	return ret;
 }
 
-int calculateCRC8(u8 * u8_srcBuff, int size, u8 * crc)
+int calculateCRC8(u8 *u8_srcBuff, int size, u8 *crc)
 {
 	u8 u8_remainder;
 	u8 bit;
@@ -1017,7 +1017,7 @@ int calculateCRC8(u8 * u8_srcBuff, int size, u8 * crc)
 	}
 }
 
-int writeLockDownInfo(u8 * data, int size, u8 lock_id)
+int writeLockDownInfo(u8 *data, int size, u8 lock_id)
 {
 	int ret, i;
 	u8 crc_data = 0;
@@ -1150,7 +1150,7 @@ int writeLockDownInfo(u8 * data, int size, u8 lock_id)
 	return ret;
 }
 
-int readLockDownInfo(u8 * lockData, u8 lock_id, int size)
+int readLockDownInfo(u8 *lockData, u8 lock_id, int size)
 {
 	int ret = 0, i;
 	int loaded_cnt = 0;
@@ -1245,7 +1245,7 @@ END:
 	return ret;
 }
 
-int fts_get_lockdown_info(u8 * lockData)
+int fts_get_lockdown_info(u8 *lockData)
 {
 	int ret = 0, i;
 	int loaded_cnt = 0;

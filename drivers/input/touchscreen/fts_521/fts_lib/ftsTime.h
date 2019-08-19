@@ -46,9 +46,9 @@ typedef struct {
 	struct timespec end;																/*store the finishing time*/
 } StopWatch;
 
-void startStopWatch(StopWatch * w);
-void stopStopWatch(StopWatch * w);
-int elapsedMillisecond(StopWatch * w);
-int elapsedNanosecond(StopWatch * w);
+void startStopWatch(StopWatch *w);
+void stopStopWatch(StopWatch *w);
+int elapsedMillisecond(StopWatch *w);
+int elapsedNanosecond(StopWatch *w);
 
 #endif
