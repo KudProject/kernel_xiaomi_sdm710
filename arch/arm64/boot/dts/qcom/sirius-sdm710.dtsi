@@ -168,6 +168,12 @@
 	snd-dbmdx-mach-drv {
 		compatible = "dspg,snd-dbmdx-mach-drv";
 	};
+
+	xiaomi_touch {
+		compatible = "xiaomi-touch";
+		status = "ok";
+		touch,name = "xiaomi-touch";
+	};
 };
 
 &qupv3_se4_spi{
@@ -336,6 +342,8 @@
 		fts,irq-flags = <0x2008>; /* IRQF_ONESHOT | IRQF_TRIGGER_LOW */
 		fts,key-num = <2>;
 		fts,key-codes = <158 139>;
+		fts,x-max = <1080>;
+		fts,y-max = <2244>;
 		fts,dump-click-count;
 		fts,config-array-size = <1>;
 
