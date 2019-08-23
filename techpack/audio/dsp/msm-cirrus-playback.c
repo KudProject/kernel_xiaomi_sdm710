@@ -67,9 +67,9 @@
 #define CIRRUS_RX_GET_IODATA 0x00A1AF09
 #define CIRRUS_TX_GET_IODATA 0x00A1BF09
 
-#define CIRRUS_AFE 0
+#define CIRRUS_NONE 0
 #define CIRRUS_COPP 1
-#define CIRRUS_INVALID 2
+#define CIRRUS_AFE 2
 
 static struct crus_sp_ioctl_header crus_sp_hdr;
 
@@ -83,7 +83,7 @@ static struct crus_control_t this_ctrl = {
 	.vol_atten = 0,
 	.prot_en = false,
 	.q6afe_rev = 2, // V3 as default
-	.location = CIRRUS_INVALID,
+	.location = CIRRUS_NONE,
 };
 
 
@@ -450,7 +450,7 @@ static int msm_routing_cirrus_location_put(struct snd_kcontrol *kcontrol,
 	switch(location) {
 		case CIRRUS_AFE:
 		case CIRRUS_COPP:
-		case CIRRUS_INVALID:
+		case CIRRUS_NONE:
 			this_ctrl.location = location;
 			break;
 		default:
@@ -847,8 +847,7 @@ static int msm_routing_crus_fail_det_get(struct snd_kcontrol *kcontrol,
 	return 0;
 }
 
-static const char * const cirrus_location_text[] = {"AFE",
-						   "COPP"};
+static const char * const cirrus_location_text[] = {"NONE", "COPP", "AFE"};
 static const char * const cirrus_fb_port_text[] = {"PRI_MI2S_RX",
 						   "SEC_MI2S_RX",
 						   "TERT_MI2S_RX",
@@ -875,7 +874,7 @@ static const char * const crus_vol_attn_text[] = {"0dB", "-18dB", "-24dB"};
 
 
 static const struct soc_enum cirrus_location_enum[] = {
-	SOC_ENUM_SINGLE_EXT(2, cirrus_location_text),
+	SOC_ENUM_SINGLE_EXT(3, cirrus_location_text),
 };
 static const struct soc_enum cirrus_fb_controls_enum[] = {
 	SOC_ENUM_SINGLE_EXT(6, cirrus_fb_port_text),
