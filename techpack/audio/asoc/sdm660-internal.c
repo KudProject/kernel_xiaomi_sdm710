@@ -1,4 +1,5 @@
 /* Copyright (c) 2015-2019, The Linux Foundation. All rights reserved.
+ * Copyright (C) 2019 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -29,6 +30,10 @@
 
 #define WCN_CDC_SLIM_RX_CH_MAX 2
 #define WCN_CDC_SLIM_TX_CH_MAX 3
+
+#ifdef CONFIG_MACH_XIAOMI_F2
+#define CS35L41_CODEC_NAME "cs35l41.2-0040"
+#endif
 
 #define WSA8810_NAME_1 "wsa881x.20170211"
 #define WSA8810_NAME_2 "wsa881x.20170212"
@@ -1054,6 +1059,31 @@ static int msm_bt_sample_rate_tx_put(struct snd_kcontrol *kcontrol,
 	return 0;
 }
 
+static int usbhs_direction_get(struct snd_kcontrol *kcontrol,
+				struct snd_ctl_elem_value *ucontrol)
+{
+	struct snd_soc_codec *codec = NULL;
+	struct snd_soc_card *card = NULL;
+	struct msm_asoc_mach_data *pdata = NULL;
+
+	ucontrol->value.integer.value[0] = 0;
+
+	codec = snd_soc_kcontrol_codec(kcontrol);
+	if (codec) {
+		card = codec->component.card;
+		if (card) {
+			pdata = snd_soc_card_get_drvdata(card);
+			if (pdata && (pdata->usbc_en2_gpio_p
+					|| pdata->usbc_en2_gpio > 0))
+				ucontrol->value.integer.value[0] =
+					gpio_get_value_cansleep(
+							pdata->usbc_en2_gpio);
+		}
+	}
+
+	return 0;
+}
+
 static const struct snd_kcontrol_new msm_snd_controls[] = {
 	SOC_ENUM_EXT("INT0_MI2S_RX Format", int0_mi2s_rx_format,
 		     int_mi2s_bit_format_get, int_mi2s_bit_format_put),
@@ -1085,6 +1115,8 @@ static const struct snd_kcontrol_new msm_snd_controls[] = {
 	SOC_ENUM_EXT("BT SampleRate TX", bt_sample_rate_tx,
 			msm_bt_sample_rate_tx_get,
 			msm_bt_sample_rate_tx_put),
+	SOC_SINGLE_EXT("USB Headset Direction", 0, 0, UINT_MAX, 0,
+			usbhs_direction_get, NULL),
 };
 
 static const struct snd_kcontrol_new msm_loopback_snd_controls[] = {
@@ -1435,7 +1467,7 @@ static void *def_msm_int_wcd_mbhc_cal(void)
 		return NULL;
 
 #define S(X, Y) ((WCD_MBHC_CAL_PLUG_TYPE_PTR(msm_int_wcd_cal)->X) = (Y))
-	S(v_hs_max, 1500);
+	S(v_hs_max, 1700);
 #undef S
 #define S(X, Y) ((WCD_MBHC_CAL_BTN_DET_PTR(msm_int_wcd_cal)->X) = (Y))
 	S(num_btn, WCD_MBHC_DEF_BUTTONS);
@@ -1460,14 +1492,14 @@ static void *def_msm_int_wcd_mbhc_cal(void)
 	 */
 	btn_low[0] = 75;
 	btn_high[0] = 75;
-	btn_low[1] = 150;
-	btn_high[1] = 150;
-	btn_low[2] = 225;
-	btn_high[2] = 225;
-	btn_low[3] = 450;
-	btn_high[3] = 450;
-	btn_low[4] = 500;
-	btn_high[4] = 500;
+	btn_low[1] = 260;
+	btn_high[1] = 260;
+	btn_low[2] = 750;
+	btn_high[2] = 750;
+	btn_low[3] = 750;
+	btn_high[3] = 750;
+	btn_low[4] = 750;
+	btn_high[4] = 750;
 
 	return msm_int_wcd_cal;
 }
@@ -1865,6 +1897,11 @@ static int msm_snd_card_late_probe(struct snd_soc_card *card)
 	struct snd_soc_codec *ana_cdc;
 	struct snd_soc_pcm_runtime *rtd;
 	int ret = 0;
+#ifdef CONFIG_MACH_XIAOMI_F2
+	struct snd_soc_dai_link *dai_link;
+	struct snd_soc_codec *cs35l41_codec;
+	struct snd_soc_dapm_context * cs35l41_dapm;
+#endif
 
 	rtd = snd_soc_get_pcm_runtime(card, be_dl_name);
 	if (!rtd) {
@@ -1885,6 +1922,27 @@ static int msm_snd_card_late_probe(struct snd_soc_card *card)
 			"%s: msm_anlg_cdc_hs_detect failed\n", __func__);
 		kfree(mbhc_cfg_ptr->calibration);
 	}
+
+#ifdef CONFIG_MACH_XIAOMI_F2
+	dai_link = rtd->dai_link;
+	if (dai_link && dai_link->codec_name
+		&& !strcmp(dai_link->codec_name, CS35L41_CODEC_NAME)) {
+		dev_info(card->dev, "%s: found codec[%s]\n", __func__,
+			CS35L41_CODEC_NAME);
+		cs35l41_codec = rtd->codec;
+		cs35l41_dapm = snd_soc_codec_get_dapm(cs35l41_codec);
+		snd_soc_dapm_ignore_suspend(cs35l41_dapm, "AMP Playback");
+		snd_soc_dapm_ignore_suspend(cs35l41_dapm, "AMP Capture");
+		snd_soc_dapm_ignore_suspend(cs35l41_dapm, "DSP1");
+		snd_soc_dapm_ignore_suspend(cs35l41_dapm, "Main AMP");
+		snd_soc_dapm_ignore_suspend(cs35l41_dapm, "ASPRX1");
+		snd_soc_dapm_ignore_suspend(cs35l41_dapm, "ASPRX2");
+		snd_soc_dapm_ignore_suspend(cs35l41_dapm, "ASPTX1");
+		snd_soc_dapm_ignore_suspend(cs35l41_dapm, "ASPTX2");
+		snd_soc_dapm_ignore_suspend(cs35l41_dapm, "SPK");
+		snd_soc_dapm_sync(cs35l41_dapm);
+	}
+#endif
 
 	return ret;
 }
@@ -3590,6 +3648,14 @@ static struct snd_soc_card *msm_int_populate_sndcard_dailinks(
 
 	if (of_property_read_bool(dev->of_node,
 				  "qcom,mi2s-audio-intf")) {
+#ifdef CONFIG_MACH_XIAOMI_F2
+		msm_mi2s_be_dai_links[0].codec_name = CS35L41_CODEC_NAME;
+		msm_mi2s_be_dai_links[0].codec_dai_name = "cs35l41-pcm";
+#else
+		msm_mi2s_be_dai_links[0].codec_name = "tas2557.2-004c";
+		msm_mi2s_be_dai_links[0].codec_dai_name = "tas2557 ASI1";
+#endif
+
 		memcpy(dailink + len1,
 		       msm_mi2s_be_dai_links,
 		       sizeof(msm_mi2s_be_dai_links));

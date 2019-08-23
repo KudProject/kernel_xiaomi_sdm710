@@ -1,5 +1,6 @@
 /*
 Copyright (c) 2017, The Linux Foundation. All rights reserved.
+Copyright (C) 2019 XiaoMi, Inc.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License version 2 and
@@ -29,12 +30,19 @@ static int __init audio_q6_init(void)
 	msm_audio_ion_init();
 	audio_slimslave_init();
 	avtimer_init();
+	elliptic_driver_init();
+#ifdef CONFIG_MSM_CSPL
+	crus_sp_init();
+#endif
 	return 0;
 }
 
 static void __exit audio_q6_exit(void)
 {
 	avtimer_exit();
+#ifdef CONFIG_MSM_CSPL
+	crus_sp_exit();
+#endif
 	audio_slimslave_exit();
 	msm_audio_ion_exit();
 	core_exit();
@@ -45,6 +53,7 @@ static void __exit audio_q6_exit(void)
 	adm_exit();
 	rtac_exit();
 	adsp_err_exit();
+	elliptic_driver_exit();
 }
 
 module_init(audio_q6_init);
