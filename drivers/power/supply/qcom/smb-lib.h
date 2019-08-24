@@ -338,6 +338,9 @@ struct smb_charger {
 	struct delayed_work	charger_type_recheck;
 	struct delayed_work	connector_health_work;
 	struct delayed_work	check_vbus_work;
+#ifdef CONFIG_CHARGER_BQ25910_SLAVE
+	struct delayed_work	dp_dm_pulse_work;
+#endif
 
 	/* cached status */
 	int			voltage_min_uv;
