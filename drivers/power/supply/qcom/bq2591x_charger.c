@@ -1,15 +1,16 @@
 /*
- * Copyright (c) 2018 XiaoMi, Inc.
+ * BQ2589x battery charging driver
+ *
+ * Copyright (C) 2013 Texas Instruments
  * Copyright (C) 2019 XiaoMi, Inc.
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License version 2 and
- *  only version 2 as published by the Free Software Foundation.
- *
- *  This program is distributed in the hope that it will be useful
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This package is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+
+ * THIS PACKAGE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+ * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 #define pr_fmt(fmt) "BQ2591X %s: " fmt, __func__
@@ -593,8 +594,8 @@ static int bq2591x_get_prop_charge_type(struct bq2591x *bq)
 		return POWER_SUPPLY_CHARGE_TYPE_NONE;
 	else if (val == BQ2591X_CHRG_STAT_FCHG)
 		return POWER_SUPPLY_CHARGE_TYPE_FAST;
-	//else if (val == BQ2591X_CHRG_STAT_TCHG)
-	//	return POWER_SUPPLY_CHARGE_TYPE_TAPER;
+
+
 	else
 		return  POWER_SUPPLY_CHARGE_TYPE_NONE;
 
@@ -1329,6 +1330,5 @@ static struct i2c_driver bq2591x_charger_driver = {
 
 module_i2c_driver(bq2591x_charger_driver);
 
-MODULE_AUTHOR("BSP@xiaomi.com");
 MODULE_DESCRIPTION("TI BQ2591x Charger Driver");
 MODULE_LICENSE("GPL2");
