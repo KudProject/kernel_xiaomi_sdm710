@@ -14,8 +14,6 @@
  * GNU General Public License for more details.
  */
 
-
-#define DEBUG
 #include <linux/workqueue.h>
 #include <linux/clk.h>
 #include <linux/interrupt.h>
