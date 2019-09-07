@@ -1232,9 +1232,7 @@ static int qpnp_haptics_auto_mode_config(struct hap_chip *chip, int time_ms)
 	if (time_ms <= 20) {
 		int index = time_ms / 5;
 
-		/*
-		 * only change pattern for different vibration cycle.
-		 */
+		/* only change pattern for different vibration cycle. */
 		if (chip->effect_max) {
 			int i = 0;
 
@@ -1724,7 +1722,6 @@ static ssize_t qpnp_haptics_show_effect_samp(struct device *dev,
 				chip->effect_array[chip->effect_index][i]);
 		ptr += len;
 	}
-
 	ptr[len] = '\0';
 
 	return snprintf(buf, PAGE_SIZE, "%s\n", str);
@@ -2106,10 +2103,9 @@ static int qpnp_haptics_parse_buffer_dt(struct hap_chip *chip)
 			chip->effect_max = 0;
 			return -EINVAL;
 		} else {
-			chip->effect_array = (u8 (*)[HAP_WAVE_SAMP_LEN])
-
-			kmalloc(HAP_WAVE_SAMP_LEN * chip->effect_max,
-				GFP_KERNEL);
+			chip->effect_array = (u8 (*)[HAP_WAVE_SAMP_LEN])kmalloc(
+					HAP_WAVE_SAMP_LEN * chip->effect_max,
+					GFP_KERNEL);
 			memcpy(chip->effect_array, prop->value,
 				HAP_WAVE_SAMP_LEN *  chip->effect_max);
 		}
