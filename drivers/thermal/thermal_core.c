@@ -2718,7 +2718,7 @@ thermal_boost_store(struct device *dev, struct device_attribute *attr,
 {
 	int ret;
 
-	ret = snprintf(boost_buf, PAGE_SIZE, buf);
+	ret = snprintf(boost_buf, sizeof(boost_buf), buf);
 
 	return len;
 }
