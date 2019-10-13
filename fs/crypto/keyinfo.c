@@ -10,7 +10,6 @@
 
 #include <keys/user-type.h>
 #include <linux/scatterlist.h>
-#include <linux/ratelimit.h>
 #include <crypto/aes.h>
 #include <crypto/sha.h>
 #include <crypto/skcipher.h>
