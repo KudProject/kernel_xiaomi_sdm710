@@ -3534,6 +3534,38 @@ QDF_STATUS reg_set_band(struct wlan_objmgr_pdev *pdev,
 	return status;
 }
 
+QDF_STATUS reg_get_band(struct wlan_objmgr_pdev *pdev,
+			enum band_info *band)
+{
+	struct wlan_regulatory_psoc_priv_obj *psoc_priv_obj;
+	struct wlan_regulatory_pdev_priv_obj *pdev_priv_obj;
+	struct wlan_objmgr_psoc *psoc;
+
+	pdev_priv_obj = reg_get_pdev_obj(pdev);
+
+	if (!IS_VALID_PDEV_REG_OBJ(pdev_priv_obj)) {
+		reg_err("pdev reg component is NULL");
+		return QDF_STATUS_E_INVAL;
+	}
+
+	psoc = wlan_pdev_get_psoc(pdev);
+	if (!psoc) {
+		reg_err("psoc is NULL");
+		return QDF_STATUS_E_INVAL;
+	}
+
+	psoc_priv_obj = reg_get_psoc_obj(psoc);
+	if (!IS_VALID_PSOC_REG_OBJ(psoc_priv_obj)) {
+		reg_err("psoc reg component is NULL");
+		return QDF_STATUS_E_INVAL;
+	}
+
+	reg_debug("getting band_info: %d", pdev_priv_obj->band_capability);
+	*band = pdev_priv_obj->band_capability;
+
+	return QDF_STATUS_SUCCESS;
+}
+
 #ifdef DISABLE_CHANNEL_LIST
 QDF_STATUS reg_restore_cached_channels(struct wlan_objmgr_pdev *pdev)
 {
@@ -5051,5 +5083,30 @@ QDF_STATUS reg_set_hal_reg_cap(struct wlan_objmgr_psoc *psoc,
 			sizeof(struct wlan_psoc_host_hal_reg_capabilities_ext));
 
 	return QDF_STATUS_SUCCESS;
+}
+
+QDF_STATUS reg_set_ignore_fw_reg_offload_ind(struct wlan_objmgr_psoc *psoc)
+{
+	struct wlan_regulatory_psoc_priv_obj *psoc_reg;
+
+	psoc_reg = reg_get_psoc_obj(psoc);
+	if (!IS_VALID_PSOC_REG_OBJ(psoc_reg)) {
+		reg_err("psoc reg component is NULL");
+		return QDF_STATUS_E_INVAL;
+	}
+
+	psoc_reg->ignore_fw_reg_offload_ind = true;
+	return QDF_STATUS_SUCCESS;
+}
+
+bool reg_get_ignore_fw_reg_offload_ind(struct wlan_objmgr_psoc *psoc)
+{
+	struct wlan_regulatory_psoc_priv_obj *psoc_reg;
+
+	psoc_reg = reg_get_psoc_obj(psoc);
+	if (!IS_VALID_PSOC_REG_OBJ(psoc_reg))
+		return false;
+
+	return psoc_reg->ignore_fw_reg_offload_ind;
 }
 
