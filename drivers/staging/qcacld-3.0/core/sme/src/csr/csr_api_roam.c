@@ -16384,9 +16384,9 @@ QDF_STATUS csr_send_join_req_msg(tpAniSirGlobal pMac, uint32_t sessionId,
 
 		if ((pMac->roam.configParam.is_force_1x1_enable ==
 					FORCE_1X1_ENABLED_FORCED ||
-		     (pMac->roam.configParam.is_force_1x1_enable ==
-					FORCE_1X1_ENABLED_FOR_AS &&
-		     pMac->lteCoexAntShare)) && is_vendor_ap_present) {
+		     pMac->roam.configParam.is_force_1x1_enable ==
+					FORCE_1X1_ENABLED_FOR_AS)
+		     && is_vendor_ap_present) {
 			pSession->supported_nss_1x1 = true;
 			pSession->vdev_nss = 1;
 			pSession->nss = 1;
