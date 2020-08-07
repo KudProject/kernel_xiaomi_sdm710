@@ -11,6 +11,7 @@
 #include <uapi/linux/mmc/core.h>
 #include <linux/interrupt.h>
 #include <linux/completion.h>
+#include <linux/blkdev.h>
 
 struct request;
 struct mmc_data;
@@ -113,8 +114,8 @@ struct mmc_request {
 	void			(*done)(struct mmc_request *);/* completion function */
 	struct mmc_host		*host;
 	struct mmc_cmdq_req	*cmdq_req;
-	struct request *req;
 
+	struct request		*req;
 	/* Allow other commands during this ongoing data transfer or busy wait */
 	bool			cap_cmd_during_tfr;
 	ktime_t			io_start;
