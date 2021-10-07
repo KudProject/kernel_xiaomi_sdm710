@@ -219,7 +219,8 @@ else
 		sxr1130-usbc-mtp-overlay.dtbo \
 		sxr1130-usbc-pm660a-mtp-overlay.dtbo \
 		sxr1130-qrd-overlay.dtbo \
-		sxr1130-svr-overlay.dtbo
+		sxr1130-svr-overlay.dtbo \
+		sxr1130-arglass-overlay.dtbo
 
 sdm670-cdp-overlay.dtbo-base := sdm670.dtb
 sdm670-mtp-overlay.dtbo-base := sdm670.dtb
@@ -295,6 +296,7 @@ sxr1130-usbc-mtp-overlay.dtbo-base := sxr1130.dtb
 sxr1130-usbc-pm660a-mtp-overlay.dtbo-base := sxr1130.dtb
 sxr1130-qrd-overlay.dtbo-base := sxr1130.dtb
 sxr1130-svr-overlay.dtbo-base := sxr1130.dtb
+sxr1130-arglass-overlay.dtbo-base := sxr1130.dtb
 endif
 
 else
@@ -382,7 +384,8 @@ dtb-$(CONFIG_ARCH_SDM670) += sdm670-rumi.dtb \
 	sxr1130-usbc-mtp.dtb \
 	sxr1130-usbc-pm660a-mtp.dtb \
 	sxr1130-qrd.dtb \
-	sxr1130-svr.dtb
+	sxr1130-svr.dtb \
+	sxr1130-arglass.dtb
 endif
 endif
 
@@ -688,7 +691,8 @@ dtb-$(CONFIG_ARCH_MSM8909) += msm8909-pm8916-mtp.dtb \
 	msm8905-qrd-skub.dtb \
 	msm8905-qrd-sku3.dtb \
 	msm8909-mtp.dtb \
-	msm8909-1gb-mtp.dtb
+	msm8909-1gb-mtp.dtb \
+	msm8909-1gb-qrd-skue.dtb
 
 dtb-$(CONFIG_ARCH_SDM450) += sdm450-rcm.dtb \
 	sdm450-cdp.dtb \
